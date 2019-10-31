@@ -63,7 +63,7 @@ public abstract class AbstractConfig implements Config {
         .create("Config", true));
   }
 
-  public AbstractConfig() {
+  protected AbstractConfig() {
     m_configUtil = ApolloInjector.getInstance(ConfigUtil.class);
     m_configVersion = new AtomicLong();
     m_arrayCache = Maps.newConcurrentMap();
@@ -423,7 +423,7 @@ public abstract class AbstractConfig implements Config {
   /**
    * Clear config cache
    */
-  protected void clearConfigCache() {
+  void clearConfigCache() {
     synchronized (this) {
       for (Cache c : allCaches) {
         if (c != null) {
@@ -434,7 +434,7 @@ public abstract class AbstractConfig implements Config {
     }
   }
 
-  protected void fireConfigChange(final ConfigChangeEvent changeEvent) {
+  void fireConfigChange(final ConfigChangeEvent changeEvent) {
     for (final ConfigChangeListener listener : m_listeners) {
       // check whether the listener is interested in this change event
       if (!isConfigChangeListenerInterested(listener, changeEvent)) {
